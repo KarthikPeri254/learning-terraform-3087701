@@ -14,11 +14,15 @@ data "aws_ami" "app_ami" {
   owners = ["979382823631"] # Bitnami
 }
 
+provider "aws" {
+  region = "us-east-1" # Ensure this matches your Lab instructions
+}
+
 resource "aws_instance" "web" {
-  ami           = "ami-0cf2b4e02406b4739" # Amazon Linux 2023 in Oregon
-  instance_type = "t2.micro"               # OR "t3.micro"
+  ami           = "ami-053b0d53c279acc90" # This is the valid ID for us-east-1
+  instance_type = "t2.micro"               # Stay on t2.micro for the Lab
   
   tags = {
-    Name = "Student-Lab-Instance"
+    Name = "Lab-Server"
   }
 }
