@@ -15,10 +15,10 @@ data "aws_ami" "app_ami" {
 }
 
 resource "aws_instance" "web" {
-  ami           = data.aws_ami.app_ami.id # Ensure this AMI is also 'Free Tier Eligible'
-  instance_type = "t2.micro"    # Change "t3.nano" to "t2.micro"
+  ami           = "ami-0cf2b4e02406b4739" # Amazon Linux 2023 in Oregon
+  instance_type = "t2.micro"               # OR "t3.micro"
   
   tags = {
-    Name = "MyFreeInstance"
+    Name = "Student-Lab-Instance"
   }
 }
