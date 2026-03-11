@@ -7,5 +7,5 @@ terraform {
 }
 
 provider "aws" {
-  region  = "us-west-2"
+  region = "us-east-1" # Ensure this matches your Lab instructions
 }
