@@ -15,7 +15,7 @@ data "aws_ami" "app_ami" {
 }
 
 resource "aws_instance" "web" {
-  ami           = "ami-xxxxxx" # Ensure this AMI is also 'Free Tier Eligible'
+  ami           = data.aws_ami.app_ami.id # Ensure this AMI is also 'Free Tier Eligible'
   instance_type = "t2.micro"    # Change "t3.nano" to "t2.micro"
   
   tags = {
