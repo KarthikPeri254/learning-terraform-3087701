@@ -14,13 +14,17 @@ data "aws_ami" "app_ami" {
   owners = ["979382823631"] # Bitnami
 }
 
-
-
 resource "aws_instance" "web" {
-  ami           = "ami-053b0d53c279acc90" # This is the valid ID for us-east-1
-  instance_type = "t2.micro"               # Stay on t2.micro for the Lab
+  # Use the dynamic data source we discussed to avoid "Malformed ID" errors
+  ami           = data.aws_ami.latest_linux.id 
   
+  # CHANGE THIS: Only use t2.micro or t3.micro
+  instance_type = "t2.micro" 
+
+  # ADD THIS: Student labs often require a specific IAM role
+  iam_instance_profile = "LabInstanceProfile" 
+
   tags = {
-    Name = "Lab-Server"
+    Name = "MyLabInstance"
   }
 }
