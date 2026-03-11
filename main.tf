@@ -14,15 +14,21 @@ data "aws_ami" "app_ami" {
   owners = ["979382823631"] # Bitnami
 }
 
-resource "aws_instance" "web" {
-  # Use the dynamic data source we discussed to avoid "Malformed ID" errors
-  ami           = data.aws_ami.latest_linux.id 
-  
-  # CHANGE THIS: Only use t2.micro or t3.micro
-  instance_type = "t2.micro" 
+# 1. This is the "Declaration" that is currently missing
+data "aws_ami" "latest_linux" {
+  most_recent = true
+  owners      = ["amazon"]
 
-  # ADD THIS: Student labs often require a specific IAM role
-  iam_instance_profile = "LabInstanceProfile" 
+  filter {
+    name   = "name"
+    values = ["al2023-ami-2023*-x86_64"]
+  }
+}
+
+# 2. Now this resource can successfully reference the ID above
+resource "aws_instance" "web" {
+  ami           = data.aws_ami.latest_linux.id
+  instance_type = "t2.micro" 
 
   tags = {
     Name = "MyLabInstance"
